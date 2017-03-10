@@ -1,0 +1,81 @@
+
+<div class="ui container">
+  <h1> Edit <%= quiz.name %> </h1>
+  <form action="/quizzes/<%= quiz._id %>" method="POST">
+
+    <div class="ui form">
+      <div class="ui raised segment">
+        <label>Name of Quiz </label>
+        <div class="field">
+          <input type="text" name="name" value="<%= quiz.name %>" >
+        </div>
+        <div class="field">
+          <label> Instructions </label>
+          <textarea rows="2" name="instructions"><%= quiz.instructions %></textarea>
+        </div>
+      </div>
+    </form>
+      <h2> Questions </h2>
+      <% questions.forEach(function(qn) { %>
+        <form action="/questions/qn.">
+          <div class="ui piled brown segment">
+            <input type="hidden" name="qn_id" value=<%= qn._id%> >
+              <div class="inline fields">
+                <div class="three wide field">
+                  <label>Type of question: </label>
+                  <input type='text' value="<%= (qn.qn_type).toUpperCase() %>" disabled>
+              </div>
+                <div class="three wide field">
+                  <label for="qn_points">Points: </label>
+                  <input type="number" name="qn_points" value="<%= qn.points %>">
+                </div>
+              </div>
+        <div class="field">
+          <textarea rows="2" name="qn_stem"><%= qn.stem %></textarea>
+        </div>
+        <h3>Options / Responses</h3>
+          <% let opt = qn.options %>
+          <% opt.forEach(function(option) { %>
+            <div class="fields">
+              <div class="twelve wide field">
+                <input type="text" name="qn_options[content]" value="<%= option.content %>">
+              </div>
+              <div class="four wide field">
+                <div class="ui checkbox">
+                  <% if (option.isAnswer == true) { %>
+                  <input type="checkbox" name="qn_options[isAnswer]" value="<%= option.isAnswer %>" id="ansChbx" checked>
+                  <% } else {%>
+                    <input type="checkbox" name="qn_options[isAnswer]" value="<%= option.isAnswer %>" id="ansChbx">
+                    <% } %>
+                  <input type="hidden" name="qn_options[isAnswer]" value="false" id="ansChbxHidden">
+                    <label>This is the answer</label>
+                  </div>
+                </div>
+            </div>
+
+          <% }) %>
+          <button class="ui button" type="submit">Save changes</button>
+      </div>
+      <% }) %>
+    </div>
+  </form>
+</div>
+
+
+
+<script
+src="https://code.jquery.com/jquery-3.1.1.min.js"
+integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+crossorigin="anonymous"></script>
+<script type="text/javascript">
+  $('.fields').on("change", "#ansChbx", function () {
+    if ($(this).prop('checked')) {
+      $(this).next("#ansChbxHidden").prop('disabled', true)
+      $(this).val("true")
+    } else {
+      $(this).next("#ansChbxHidden").prop('disabled', false)
+      $(this).val("false")
+    }
+
+  })
+</script>

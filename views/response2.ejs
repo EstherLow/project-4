@@ -1,0 +1,88 @@
+<div class="ui container">
+  <div class="ui two column grid" id="participant-form">
+    <div class="row">
+      <div class="ten wide column">
+        <h1>To enter quiz: </h1>
+        <label> Enter your nickname </label> <input type="text" id="username" name="user_name"> <button class="ui button" id="nickname" type="button">Submit</button>
+
+        <button class="ui button" id="start" type="button">Start Quiz</button>
+      </div>
+      <div class="ui raised segment">
+      <div class="four wide column">
+        <h3> Users who have joined the quiz </h3>
+        <hr>
+        <div id="playerlist">
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+
+    <div class="ui container" id="quiz" style="visibility: hidden">
+      <h1>  <%=quiz.name %> : <span> <h1> <%= quiz.instructions %> </h1> </span> </h1>
+      <% questions.forEach(function (qn){ %>
+        <div class="ui stacked segment">
+          <h3><%= qn.stem %></h3>
+          <div class="ui horizontal segments">
+            <% let optArr = qn.options %>
+            <% optArr.forEach(function (opt) { %>
+              <button type='submit' id="choices" class="ui segment" value="<%= opt._id %>"><%= opt.content %></button>
+              <% }) %>
+            </div>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+
+      <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"></script>
+
+
+      <script type="text/javascript">
+      var socket = io();
+
+
+      socket.on('connect', function() {
+        console.log('Connected!');
+      })
+
+      socket.on('user joined', function(data) {
+        console.log("data received fr index.js", data);
+          $("#playerlist").empty()
+        for (let i = 0; i < data.length; i++) {
+          $("#playerlist").append('<div class="item">'+ data[i] + '%></div>')
+        }
+      })
+
+      socket.on('assess answer', function() {
+
+      })
+
+      $("#nickname").on("click", function () {
+        let data = { username: $("#username").val(), room: "room1" }
+        console.log(data);
+        $('#participant-form').append("<div class='ui positive message' id='confirmation'><h3>Hi, " + data.username + "! </h3><p> You have entered quiz successfully! The quiz will start soon.</p></div>")
+        socket.emit('send username', data)
+      })
+
+      $("#start").on("click", function () {
+        $("#quiz").css("visibility", "visible")
+        $("#confirmation").remove()
+      })
+
+      $('div').on("click", "#choices", function() {
+        console.log("choices clicked");
+        let data = $(this).val()
+        console.log(data);
+        socket.emit('send response', data)
+      })
+
+      //if server server emits "user joined"
+      // socket.on('user joined', function(data) {
+      //  this.connectedUsers.push(data)
+      //})
+
+      </script>

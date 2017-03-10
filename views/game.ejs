@@ -1,0 +1,41 @@
+<div id="app">
+
+  <div class="ui container">
+    <h1>  {{ quiz_name }} : <span> <h1> {{  quiz_instructions }} </h1> </span></h1>
+    <div v-if="showQuestion == false">
+      <h3> To join quiz, go to <a>http://localhost:3000/live/response</a> , and enter the code below:</h3>
+      <h3><%- (quiz._id).toString().substring(20, 24).toUpperCase() %></h3>
+        <button class="ui button" v-on:click="startGame()">Start</button>
+    </div>
+    <question v-show="showQuestion"> </question>
+  </div>
+</div>
+
+
+<script>
+
+new Vue({
+  el: "#app",
+  data: {
+    quiz_name: '<%= quiz.name %>',
+    quiz_instructions: '<%= quiz.instructions %>',
+    showQuestion: false
+  },
+  components: {
+    question: {
+      data: function () {
+        return {
+          questions: JSON.parse('<%- JSON.stringify(questions) %>'),
+        }
+      },
+      template: '<div><div class="ui stacked segment" v-for="(question, index) in questions"><h3 v-bind:id="index">{{ index + 1 }} ) {{question.stem}}</h3><div class="ui horizontal segments"><div class="ui segment" v-for="(opt, index) in question.options">{{index + 1}}) {{ opt.content }}</div></div></div></div>',
+    },
+  },
+  methods: {
+    startGame: function () {
+      this.showQuestion = true
+    }
+  }
+
+})
+</script>

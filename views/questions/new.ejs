@@ -1,0 +1,118 @@
+
+<div class='ui centered grid'>
+  <div class="row"><h1>Add questions to quiz</h1></div>
+  <div class='twelve wide column grid'>
+<form action="/questions" method="POST">
+  <div class="ui form">
+    <input type="hidden" name="quiz_id" value=<%= req.params.id%> >
+    <div class="inline fields">
+      <label for="">Select type of question:</label>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="qn_type" value="mcq">
+          <label>Multiple-choice</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="ui radio checkbox">
+          <input type="radio" name="qn_type" value="free-response">
+          <label>Free response</label>
+        </div>
+      </div>
+      <div class="two wide field">
+        <label>Points: </label>
+        <input type="number" name="points">
+      </div>
+    </div>
+    <div class="field">
+      <textarea rows="2" name="stem" placeholder="Type your question here"></textarea>
+    </div>
+    <h1>Options / Responses</h1>
+      <div class="fields">
+        <div class="twelve wide field">
+          <input type="text" name="options[content]" placeholder="Type your content here">
+        </div>
+        <div class="four wide field">
+          <div class="ui checkbox">
+            <input type="checkbox" name="options[isAnswer]" value="false" id="ansChbx">
+            <input type="hidden" name="options[isAnswer]" value="false" id="ansChbxHidden">
+              <label>This is the answer</label>
+            </div>
+          </div>
+          <div class="four wide field">
+            <button class="ui icon button" id="addOption" type="button"><i class="plus icon"></i></button>
+          </div>
+      </div>
+    <div class="disabled fields">
+      <div class="twelve wide field">
+        <input type="text" name="options[content]" placeholder="Type your content here">
+      </div>
+      <div class="four wide field">
+        <div class="ui checkbox">
+          <input type="checkbox" name="options[isAnswer]" value="false" id="ansChbx">
+          <input type="hidden" name="options[isAnswer]" value="false" id="ansChbxHidden">
+            <label>This is the answer</label>
+          </div>
+        </div>
+        <div class="four wide field">
+          <button class="ui icon button" id="addOption" type="button"><i class="plus icon"></i></button>
+        </div>
+    </div>
+    <div class="disabled fields">
+      <div class="twelve wide field">
+        <input type="text" name="options[content]" placeholder="Type your content here">
+      </div>
+      <div class="four wide field">
+        <div class="ui checkbox">
+          <input type="checkbox" name="options[isAnswer]" value="false" id="ansChbx">
+          <input type="hidden" name="options[isAnswer]" value="false" id="ansChbxHidden">
+            <label>This is the answer</label>
+          </div>
+        </div>
+        <div class="four wide field">
+          <button class="ui icon button" id="addOption" type="button"><i class="plus icon"></i></button>
+        </div>
+    </div>
+    <div class="disabled fields">
+      <div class="twelve wide field">
+        <input type="text" name="options[content]" placeholder="Type your content here">
+      </div>
+      <div class="four wide field">
+        <div class="ui checkbox">
+          <input type="checkbox" name="options[isAnswer]" value="false" id="ansChbx">
+          <input type="hidden" name="options[isAnswer]" value="false" id="ansChbxHidden">
+            <label>This is the answer</label>
+          </div>
+        </div>
+        <div class="four wide field">
+        </div>
+    </div>
+
+    <input class="ui button" type="submit" name="destination" value="Save and Exit">
+    <input class="ui button" type="submit" name="destination" value="Save and Add Question">
+    <a class="ui button" href="/dashboard" >Cancel</a>
+  </div>
+</form>
+</div>
+</div>
+
+<script
+src="https://code.jquery.com/jquery-3.1.1.min.js"
+integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+crossorigin="anonymous"></script>
+<script type="text/javascript">
+  $('.fields').on("change", "#ansChbx", function () {
+    if ($(this).prop('checked')) {
+      $(this).next("#ansChbxHidden").prop('disabled', true)
+      $(this).val("true")
+    } else {
+      $(this).next("#ansChbxHidden").prop('disabled', false)
+      $(this).val("false")
+    }
+
+  })
+
+  $('.fields').on('click', "#addOption", function (){
+    $(this).parents().next().removeClass().addClass("fields")
+  })
+</script>

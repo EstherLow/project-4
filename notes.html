@@ -1,0 +1,17 @@
+routes
+
+//server-side
+get "/" => index.ejs
+get "/dashboard" => dashboard.ejs
+get "/new" => create_quiz.ejs
+post "/create" => create_quiz.ejs     // show_quiz.ejs
+get "/:id"  => show_quiz.js           //  show 1 quiz
+puts "/:id"  => update_quiz
+get "/launch" => launch_quiz.ejs      //show game code, start button
+
+
+
+// client-side
+"/join" => joinGame.vue             // for participants to input game code (add to params)
+"/game" => gamePlay.vue             // view for displaying questions
+"/response" => response.vue         // for participants to input their choices

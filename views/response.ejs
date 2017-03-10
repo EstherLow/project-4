@@ -1,0 +1,40 @@
+
+
+
+
+  <div class="ui container">
+    <div class="ui horizontal segments">
+      <input type="submit" class="ui red inverted segment" id="choices" value="A">
+      <input type="submit" class="ui blue inverted segment" id="choices" value="B">
+
+      <input type="submit" class="ui yellow inverted segment" id="choices" value="C">
+      <input type="submit" class="ui green inverted segment" id="choices" value="D">
+    </div>
+  </div>
+
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+
+
+<script type="text/javascript">
+var socket = io();
+
+socket.on('connect', function() {
+  console.log('Connected!');
+})
+
+$('div').on("click", "#choices", function() {
+  console.log("choices clicked");
+  let data = $(this).val()
+  console.log(data);
+  socket.emit('send response', data)
+})
+
+//if server server emits "user joined"
+// socket.on('user joined', function(data) {
+//  this.connectedUsers.push(data)
+//})
+
+</script>
