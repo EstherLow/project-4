@@ -62,7 +62,7 @@ app.get('/quizzes/:id/questions/new', questions_controller.new)  // add new ques
 
 app.post('/questions', questions_controller.createQuestion)
 
-app.get('/dashboard', quizzes_controller.listAllQuiz)
+app.get('/', quizzes_controller.listAllQuiz)
 
 app.get('/live/response', function(req, res) {
   res.render('response')
@@ -93,12 +93,12 @@ io.on('connect', function(socket) {
           var options = response[0].options
           console.log(index);
           if (options._id == index && options.isAnswer == true)  {
-          answer = 'This is correct'
-          console.log("if 1: ", answer);
-          } else {
-            answer = 'This is wrong'
-            console.log("else ", answer);
-          }
+                answer = 'This is correct'
+                console.log("if 1: ", answer);
+                } else {
+                  answer = 'This is wrong'
+                  console.log("else ", answer);
+                }
         })
         console.log();
         io.emit("assess answer")
