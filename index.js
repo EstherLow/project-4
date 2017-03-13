@@ -91,8 +91,8 @@ io.on('connect', function(socket) {
     let index = data
       Question.find({'options._id': data}, function (err, response) {
           var options = response[0].options
-
-          if (response.isAnswer == true)  {
+          console.log(index);
+          if (options._id == index && options.isAnswer == true)  {
           answer = 'This is correct'
           console.log("if 1: ", answer);
           } else {
