@@ -37,8 +37,9 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 
 
-
-
+app.get('/dashboard', function (req, res) {
+  res.render('dashboard')
+})
 
 app.get('/quizzes/new', function (req, res) {
     res.render('quizzes/new')
@@ -87,22 +88,22 @@ io.on('connect', function(socket) {
 //tell all clients that someone connected
   //io.emit('user joined', namespace)
 
-  socket.on('send response', function(data){
-    let index = data
-      Question.find({'options._id': data}, function (err, response) {
-          var options = response[0].options
-          console.log(index);
-          if (options._id == index && options.isAnswer == true)  {
-                answer = 'This is correct'
-                console.log("if 1: ", answer);
-                } else {
-                  answer = 'This is wrong'
-                  console.log("else ", answer);
-                }
-        })
-        console.log();
-        io.emit("assess answer")
-     })
+  // socket.on('send response', function(data){
+  //   let index = data
+  //     Question.find({'options._id': data}, function (err, response) {
+  //         var options = response[0].options
+  //         console.log(index);
+  //         if (options._id == index && options.isAnswer == true)  {
+  //               answer = 'This is correct'
+  //               console.log("if 1: ", answer);
+  //               } else {
+  //                 answer = 'This is wrong'
+  //                 console.log("else ", answer);
+  //               }
+  //       })
+  //       console.log();
+  //       io.emit("assess answer")
+  //    })
 
   socket.on('send username', function(data){
     let userdata = data

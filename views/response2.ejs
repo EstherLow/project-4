@@ -1,11 +1,10 @@
 <div class="ui container">
+  <button class="ui button" id="start" type="button">Start Quiz</button>
   <div class="ui two column grid" id="participant-form">
     <div class="row">
       <div class="ten wide column">
         <h1>To enter quiz: </h1>
         <label> Enter your nickname </label> <input type="text" id="username" name="user_name"> <button class="ui button" id="nickname" type="button">Submit</button>
-
-        <button class="ui button" id="start" type="button">Start Quiz</button>
       </div>
       <div class="ui raised segment">
       <div class="four wide column">
@@ -43,10 +42,9 @@
 
       <script type="text/javascript">
       var socket = io();
-
-
       socket.on('connect', function() {
         console.log('Connected!');
+        socket.emit('started',  )
       })
 
       socket.on('user joined', function(data) {

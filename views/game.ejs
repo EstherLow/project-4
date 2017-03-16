@@ -38,4 +38,44 @@ new Vue({
   }
 
 })
+
+var socket = io();
+
+
+socket.on('connect', function() {
+  console.log('Connected!');
+
+})
+
+socket.on('user joined', function(data) {
+  console.log("data received fr index.js", data);
+    $("#playerlist").empty()
+  for (let i = 0; i < data.length; i++) {
+    $("#playerlist").append('<div class="item">'+ data[i] + '%></div>')
+  }
+})
+
+socket.on('assess answer', function() {
+
+})
+
+$("#nickname").on("click", function () {
+  let data = { username: $("#username").val(), room: "room1" }
+  console.log(data);
+  $('#participant-form').append("<div class='ui positive message' id='confirmation'><h3>Hi, " + data.username + "! </h3><p> You have entered quiz successfully! The quiz will start soon.</p></div>")
+  socket.emit('send username', data)
+})
+
+$("#start").on("click", function () {
+  $("#quiz").css("visibility", "visible")
+  $("#confirmation").remove()
+})
+
+$('div').on("click", "#choices", function() {
+  console.log("choices clicked");
+  let data = $(this).val()
+  console.log(data);
+  socket.emit('send response', data)
+})
+
 </script>
