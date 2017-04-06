@@ -1,6 +1,6 @@
 <div class="ui container">
   <div class="ui secondary pointing menu">
-    <a class="item" href="/quizzes/new">Create New Quiz</a>
+    <a class="item" href="/quiz/new">Create New Quiz</a>
     <a class="item" href="#">View Question Bank</a>
   </div>
 
@@ -23,10 +23,10 @@
               </div>
               <div class="extra content">
                 <div class="ui three buttons">
-                  <form action="/quizzes/<%=quiz._id%>/live" method="GET">
+                  <form action="/quiz/<%=quiz._id%>/live" method="GET">
                     <button type="submit" class="ui basic green button" name="id" value="<%= quiz._id %>">Launch Quiz</button>
                   </form>
-                  <form action="/quizzes/<%=quiz._id%>" method="GET">
+                  <form action="/quiz/<%=quiz._id%>" method="GET">
                     <button class="ui basic red button" name="id" value="<%= quiz._id %>">Edit Quiz</button>
                   </form>
                   <!-- <form action="/quizzes/<%=quiz._id%>/game" method="GET">

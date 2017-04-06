@@ -10,8 +10,15 @@ const quizzes_controller = require('./controllers/quizzes_controller')
 const questions_controller = require('./controllers/questions_controller')
 const http  = require('http').createServer(app)
 const io = require('socket.io')(http)
+
 const Participant = require('./models/participant').model
 const Question = require('./models/question').model
+const Livequiz = require('./models/livequiz').model
+const Response = require('./models/response').model
+
+const qn = require('./routes/question')
+const quiz = require('./routes/quiz')
+const livequiz = require('./routes/livequiz')
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/quizzit')
 mongoose.Promise = global.Promise;
@@ -36,34 +43,20 @@ app.use(methodOverride('_method'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true}))
 
+app.use('/question', qn)
+app.use('/quiz', quiz)
+app.use('/livequiz', livequiz)
+
+
+app.get('/', quizzes_controller.listAllQuiz)
 
 app.get('/dashboard', function (req, res) {
   res.render('dashboard')
 })
 
-app.get('/quizzes/new', function (req, res) {
-    res.render('quizzes/new')
-})
-
 app.get('/game', function (req, res) {
   res.render('game')
 })
-
-app.post('/quizzes', quizzes_controller.addQuiz)  // add new quiz
-
-app.get('/quizzes/:id/live', quizzes_controller.showLiveQuiz)  // show view of individual live quiz
-
-app.get('/quizzes/:id', quizzes_controller.editQuiz)  //show edit form for 1 quiz
-
-app.get('/quiz/:id', quizzes_controller.showQuiz)
-
-app.post('/quizzes/:id', quizzes_controller.updateQuiz)
-
-app.get('/quizzes/:id/questions/new', questions_controller.new)  // add new questions to created quiz
-
-app.post('/questions', questions_controller.createQuestion)
-
-app.get('/', quizzes_controller.listAllQuiz)
 
 app.get('/live/response', function(req, res) {
   res.render('response')
@@ -73,48 +66,64 @@ app.get('/quizzes/:id/launch.html', function(req, res) {
   res.render('game')
 })
 
-app.get('/scoreboard', quizzes_controller.liveQuizScoreboard)
-
-app.get('/quizzes/:id/game', quizzes_controller.showLiveQuiz2)
 
 
 
 
 //websocket functions
 
+let users = []
+
 io.on('connect', function(socket) {
   console.log("A user connected " + socket.id);
-  users = []
 //tell all clients that someone connected
   //io.emit('user joined', namespace)
 
-  socket.on('send response', function(data){
-    let index = data
-      Question.find({'options._id': data}, function (err, response) {
-          var options = response[0].options
-          console.log(index);
-          if (options._id == index && options.isAnswer == true)  {
-                answer = 'This is correct'
-                console.log("if 1: ", answer);
-                } else {
-                  answer = 'This is wrong'
-                  console.log("else ", answer);
-                }
-        })
-        console.log();
-        // io.emit("assess answer")
-     })
-
   socket.on('send username', function(data){
     let userdata = data
-    users.push(userdata.username)
-    Participant.create({username: userdata.username, socket_id: socket.id, quiz_id: userdata.room})
+    //set socket
     socket.room = userdata.room
     socket.username = userdata.username
     socket.join(userdata.room)
-    socket.broadcast.to('room1')
-    io.emit("user joined", users)
+    socket.broadcast.to(userdata.room)
+
+    Participant.create({username: userdata.username, socket_id: socket.id, livequiz_id: userdata.room}, function (err, created) {
+      if (err) { return console.log(err) }
+      Participant.find({livequiz_id: userdata.room}, function (err, participants) {
+        if (err) { return console.log(err) }
+        io.sockets.in(userdata.room).emit("user joined", {participants: participants})
+      })
     })
+    console.log("user room", userdata.room);
+    })
+
+    socket.on('start quiz', function (data) {
+      console.log('start', data);
+      io.sockets.in(data).emit('quiz started')
+    })
+
+
+    socket.on('send response', function(data){
+      let room = data.userroom
+      console.log('send response data', data);
+      Response.create({participant: data.username, option: data.response, isAnswer: data.isAnswer}, function (err, response){
+        if (err) { console.log(err) };
+        console.log("index js response", response);
+        io.sockets.in(room).emit('response sent', {response: response})
+      })
+    })
+
+       socket.on('disconnect', function() {
+         let room = socket.room
+         let user = socket.name
+         Participant.remove({socket_id: socket.id}, function(err) {
+           if (err) { return console.log(err) }
+           Livequiz.remove({code: socket.room}, function (err) {
+             if (err) { return console.log(err) }
+             io.sockets.in(room).emit('left room', user)
+           })
+         })
+       })
 
 })
 

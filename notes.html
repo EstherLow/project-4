@@ -15,3 +15,47 @@ get "/launch" => launch_quiz.ejs      //show game code, start button
 "/join" => joinGame.vue             // for participants to input game code (add to params)
 "/game" => gamePlay.vue             // view for displaying questions
 "/response" => response.vue         // for participants to input their choices
+
+<!-- <div class="ui two column grid" id="participant-form">
+  <div class="row">
+    <div class="ten wide column">
+      <h1>To enter quiz: </h1>
+      <label> Enter your nickname </label> <input type="text" id="username" name="user_name">
+      <input type="hidden" id="userroom" name="room" value="<%= livequiz.code %>">
+       <button class="ui button" id="nickname" type="button">Submit</button>
+    </div>
+    <div class="ui raised segment">
+    <div class="four wide column">
+      <h3> Users who have joined the quiz </h3>
+      <button class="ui button" id="start" type="button">Start Quiz</button>
+      <hr>
+      <div class="ui two column grid">
+        <div id="playerlist" class="six wide column">
+        </div>
+        <div class="six wide column" id="responselist">
+        </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+
+  <div class="ui container" id="quiz" style="visibility: hidden">
+    <h1>  <%=quiz.name %> : <span> <h1> <%= quiz.instructions %> </h1> </span> </h1>
+    <% questions.forEach(function (qn){ %>
+      <div class="ui stacked segment">
+        <h3><%= qn.stem %></h3>
+        <div class="ui horizontal segments">
+          <% let optArr = qn.options %>
+          <% optArr.forEach(function (opt, index) { %>
+            <button type='submit' id="<%= index %>" class="ui segment response" value="<%= opt._id %>"><%= opt.content %></button>
+            <% }) %>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+
+    
+
+    -->

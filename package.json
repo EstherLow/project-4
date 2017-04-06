@@ -27,10 +27,11 @@
     "method-override": "^2.3.7",
     "mongoose": "^4.8.6",
     "path": "^0.12.7",
+    "semantic-ui": "^2.2.10",
     "socket.io": "^1.7.3",
     "vue": "^2.2.1"
   },
-  "engines" : {
-    "node" : "^6.6.0"
-    }
+  "engines": {
+    "node": "^6.6.0"
+  }
 }

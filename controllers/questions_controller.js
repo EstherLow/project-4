@@ -28,9 +28,9 @@ module.exports = {
         if (err) { return console.log(err) }
         if (req.body.destination === "Save and Exit") {
           console.log(req.body);
-          res.redirect('/dashboard')
+          res.redirect('/')
       } else if (req.body.destination === "Save and Add Question") {
-        res.redirect('/quizzes/' + req.body.quiz_id + '/questions/new')
+        res.redirect('/quiz/' + req.body.quiz_id +'/questions/new')
       }
     })
   }

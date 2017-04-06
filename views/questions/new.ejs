@@ -2,7 +2,7 @@
 <div class='ui centered grid'>
   <div class="row"><h1>Add questions to quiz</h1></div>
   <div class='twelve wide column grid'>
-<form action="/questions" method="POST">
+<form action="/question/new" method="POST">
   <div class="ui form">
     <input type="hidden" name="quiz_id" value=<%= req.params.id%> >
     <div class="inline fields">
@@ -90,7 +90,7 @@
 
     <input class="ui button" type="submit" name="destination" value="Save and Exit">
     <input class="ui button" type="submit" name="destination" value="Save and Add Question">
-    <a class="ui button" href="/dashboard" >Cancel</a>
+    <a class="ui button" href="/" >Cancel</a>
   </div>
 </form>
 </div>

@@ -10,7 +10,7 @@ module.exports = {
       instructions: req.body.instructions
     }, function(err, quiz) {
       if (err) { return console.log(err) }
-      res.redirect('/quizzes/' + quiz._id + '/questions/new')
+      res.redirect('/quiz/' + quiz._id + '/questions/new')
     })
   },
   listAllQuiz: function (req, res, next) {
@@ -54,36 +54,10 @@ module.exports = {
         })
       })
   },
-  showLiveQuiz: function (req, res, next) {
-    Quiz.findById({_id: req.params.id}, function (err, quiz) {
-      if (err) { return console.log(err) }
-      Question.find({quiz_id: req.params.id}, function (err, questions) {
-        if (err) { return console.log(err) }
-        console.log(questions);
-        res.render('response2', {quiz: quiz, questions: questions})
-      })
-    })
-  },
-  showLiveQuiz2: function (req, res, next) {
-    Quiz.findById({_id: req.params.id}, function (err, quiz) {
-      if (err) { return console.log(err) }
-      Question.find({quiz_id: req.params.id}, function (err, questions) {
-        if (err) { return console.log(err) }
-        console.log(questions);
-        res.render('game', {quiz: quiz, questions: questions})
-      })
-    })
-  },
   showQuiz: function (req, res, next) {
     Quiz.findById({_id: req.params.id}, function (err, quiz) {
       if (err) {return console.log(err)}
       res.render('quiz', {quiz: quiz})
-    })
-  },
-  liveQuizScoreboard: function (req, res, next) {
-    Participant.find({}, function (err, participants) {
-      if (err) { return console.log(err) }
-      res.render('scoreboard', {participants, participants})
     })
   }
 }
