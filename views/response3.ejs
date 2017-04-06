@@ -24,29 +24,10 @@
     </div>
   </div>
 
-  <div class="ui centered grid" id="quiz-info" style="visibility: hidden; margin-top: 50px">
-    <div class="nine wide column">
-      <div class="ui container" id="quiz" style="visibility: hidden">
-        <h3 class="ui header">Current Quiz</h3>
-        <% let questions = quiz.questions %>
-        <% questions.forEach(function (qn){ %>
-          <div class="ui stacked segment">
-            <h3><%= qn.stem %></h3>
-            <div class="ui horizontal segments">
-              <% let optArr = qn.options %>
-              <% optArr.forEach(function (opt, index) { %>
-                <button type='submit' id="<%= index %>" class="ui segment response" value="<%= opt._id %>"><%= opt.content %></button>
-                <% }) %>
-              </div>
-            </div>
-            <% }) %>
-            <button class="ui button" id="togglequestion">Next Question</button>
-          </div>
-
-    </div>
+  <div class="ui centered stackable grid" id="quiz-info" style="visibility: hidden; margin-top: 50px">
     <div class="six wide column">
       <h3 class="ui header">Participants who have joined the quiz.</h3>
-      <div class="ui internally celled grid">
+      <div class="ui internally celled stackable grid">
         <div class='row'>
           <div class="four wide column">Name</div>
           <div class="ten wide column">Response to question</div>
@@ -55,6 +36,27 @@
       </div>
       <div class="ui internally celled grid" id="participantslist"></div>
     </div>
+    <div class="nine wide column">
+      <div class="ui container" id="quiz" style="visibility: hidden">
+        <h3 class="ui header">Current Quiz</h3>
+        <% let questions = quiz.questions %>
+        <% questions.forEach(function (qn, index){ %>
+          <div class="ui stacked segment" id="<%= index %>" style="visibility: hidden">
+            <h3><%= qn.stem %></h3>
+            <div class="ui horizontal segments">
+              <% let optArr = qn.options %>
+              <% optArr.forEach(function (opt, index) { %>
+                <div class="ui segment" value="<%= opt._id %>"><%= opt.content %></div>
+                <% }) %>
+              </div>
+                <input type="hidden" id="numIndex" value="<%= index %>">
+                <button type="button" class="ui button" id="togglequestion"></button>
+            </div>
+            <% }) %>
+          </div>
+
+    </div>
+
   </div>
 
 </div>
@@ -107,10 +109,13 @@
         console.log('start quiz', code)
         socket.emit('start quiz', code)
         $('#quiz').css('visibility', 'visible')
+        $('#0').css('visibility', 'visible')
       })
 
       $('#togglequestion').on("click", function () {
-        socket.emit('next question')
+        let data = {index: $('#numIndex').val(), room: $('userroom').val()}
+        socket.emit('next question', data)
+        $('#'+ data).css("display", "none")
 
       })
 

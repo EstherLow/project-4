@@ -12,16 +12,18 @@
         <div class="ui container" >
           <% let quiz = livequiz.quiz_id %>
           <h1>  <%= quiz.name %> : <span> <h1> <%= quiz.instructions %> </h1> </span> </h1>
-          <div class="ui stacked segment">
-          <% let qIndex = 0 %>
-          <h3><%= quiz.questions[qIndex].stem %></h3>
-          <div class="ui horizontal segments">
-            <% let optArray = quiz.questions[qIndex].options %>
-            <% optArray.forEach( function (opt, index) { %>
-              <button type='submit' class="ui segment response" id="<%= opt.isAnswer %>" value="<%= opt.content %>" ><%= opt.content %></button>
-              <% }) %>
+          <% let questions = quiz.questions %>
+          <% questions.forEach(function (qn, index){ %>
+          <div class="ui stacked segment" id="<%= index %>" style="visibility: hidden">
+            <h3><%= qn.stem %></h3>
+            <div class="ui horizontal segments">
+              <% let optArray = qn.options %>
+              <% optArray.forEach( function (opt, index) { %>
+                <button type='submit' class="ui segment response" id="<%= opt.isAnswer %>" value="<%= opt.content %>" ><%= opt.content %></button>
+                <% }) %>
             </div>
           </div>
+          <% }) %>
         </div>
       </div>
     </div>
@@ -44,7 +46,16 @@
       socket.on('quiz started', function () {
         console.log('start quiz fired');
         $("#quiz").css("visibility", "visible")
+        $("#0").css("visibility", "visible")
         $("#confirmation").remove()
+      })
+
+      socket.on('change question', function (data) {
+        console.log('change question fired', data);
+        let numIndex = data
+        let newIndex = numIndex + 1
+        $("#" + numIndex).css("display", "none")
+        $("#"+ newIndex).css("visibility", "visible")
       })
 
 

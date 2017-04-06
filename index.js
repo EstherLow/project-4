@@ -113,6 +113,13 @@ io.on('connect', function(socket) {
       })
     })
 
+    socket.on('next question', function(data){
+      let room = data.userroom
+      let index = data.index
+      console.log('nextquestion', data);
+      io.sockets.in(room).emit('response sent', index)
+    })
+
        socket.on('disconnect', function() {
          let room = socket.room
          let user = socket.name
