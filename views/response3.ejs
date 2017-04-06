@@ -25,7 +25,7 @@
   </div>
 
   <div class="ui centered grid" id="quiz-info" style="visibility: hidden; margin-top: 50px">
-    <div class="eight wide column">
+    <div class="nine wide column">
       <div class="ui container" id="quiz" style="visibility: hidden">
         <h3 class="ui header">Current Quiz</h3>
         <% let questions = quiz.questions %>
@@ -49,8 +49,8 @@
       <div class="ui internally celled grid">
         <div class='row'>
           <div class="four wide column">Name</div>
-          <div class="eight wide column">Response to question</div>
-          <div class="four wide column"></div>
+          <div class="ten wide column">Response to question</div>
+          <div class="two wide column"></div>
         </div>
       </div>
       <div class="ui internally celled grid" id="participantslist"></div>
@@ -76,7 +76,7 @@
         $("#participantslist").empty()
         let participants = data.participants
           for (let i = 0; i < participants.length; i++) {
-            $('#participantslist').append('<div class="row"><div class="four wide column">' + participants[i].username + '</div><div class="eight wide column" id="choice-' + participants[i].username +'"></div><div class="four wide column" id="'+ participants[i].username + '-isAnswer"></div></div>')
+            $('#participantslist').append('<div class="row"><div class="four wide column">' + participants[i].username + '</div><div class="ten wide column" id="choice-' + participants[i].username +'"></div><div class="two wide column" id="'+ participants[i].username + '-isAnswer"></div></div>')
           }
       })
 

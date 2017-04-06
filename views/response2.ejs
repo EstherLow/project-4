@@ -1,15 +1,14 @@
 <div class="ui container">
-    <div class="row" id="quiz-header">
-      <div class="ten wide column" id="user-form">
-        <h1>To enter quiz: </h1>
-        <label> Enter your nickname </label>
+    <div class="ui form" id="quiz-header">
+      <div class="inline fields" id="user-form">
+        <h2 class="eight wide field">Key in your name to enter quiz: </h2>
         <input type="text" id="username" name="user_name">
         <input type="hidden" id="userroom" name="room" value="<%= livequiz.code %>">
         <button class="ui button" id="nickname" type="button">Submit</button>
       </div>
     </div>
     <div class="ui grid" id="quiz" style="visibility: hidden">
-      <div class="ten wide column">
+      <div class="twelve wide column">
         <div class="ui container" >
           <% let quiz = livequiz.quiz_id %>
           <h1>  <%= quiz.name %> : <span> <h1> <%= quiz.instructions %> </h1> </span> </h1>
@@ -24,11 +23,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="six wide column">
-        <% let scores = 0 %>
-        <h3 class="ui header" id="scoreboard">Your current scores: </h3>
-        <div><%= scores %> </div>
       </div>
     </div>
 </div>

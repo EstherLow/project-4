@@ -1,10 +1,15 @@
-<div class="ui container">
 
-<h3>To join quiz, enter quiz code below: </h3>
+<div class="ui container" style="margin-top: 20px">
+  <div class="ui form">
 
-<form action="/livequiz/new" method="POST">
-  <input type="text" name="code" placeholder="Enter quiz code">
-  <input type="submit">
-</form>
+    <div class="inline fields">
+      <h3 class="five wide field">To join quiz, enter quiz code below: </h3>
 
+      <form  class="eight wide field" action="/livequiz/new" method="POST">
+        <input type="text" name="code" placeholder="Enter quiz code">
+        <input type="submit" class="ui button">
+      </form>
+
+    </div>
+  </div>
 </div>
