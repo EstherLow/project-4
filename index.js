@@ -117,7 +117,7 @@ io.on('connect', function(socket) {
       let room = data.userroom
       let index = data.index
       console.log('nextquestion', data);
-      io.sockets.in(room).emit('response sent', index)
+      io.sockets.in(room).emit('change question', index)
     })
 
        socket.on('disconnect', function() {

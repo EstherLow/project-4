@@ -12,6 +12,7 @@
       </div>
     </div>
   </div>
+
   <div id="instructions" class="ui center aligned container" style="visibility: hidden">
     <h2 class="ui header">To enter quiz, please go to http://localhost:3000/livequiz, and enter the code below</h2>
     <div class="ui grid">
@@ -38,7 +39,7 @@
     </div>
     <div class="nine wide column">
       <div class="ui container" id="quiz" style="visibility: hidden">
-        <h3 class="ui header">Current Quiz</h3>
+        <h3 class="ui header" id="quiz-container">Current Quiz</h3>
         <% let questions = quiz.questions %>
         <% questions.forEach(function (qn, index){ %>
           <div class="ui stacked segment" id="<%= index %>" style="visibility: hidden">
@@ -50,7 +51,7 @@
                 <% }) %>
               </div>
                 <input type="hidden" id="numIndex" value="<%= index %>">
-                <button type="button" class="ui button" id="togglequestion"></button>
+                <button type="button" class="ui button" id="togglequestion">Next Question</button>
             </div>
             <% }) %>
           </div>
@@ -98,6 +99,7 @@
 
       $('#launch').on("click", function () {
         let data = { username: $("#username").val(), room:$('#userroom').val() }
+        console.log('launch clicked');
         socket.emit('send username', data)
         $('#instructions').css('visibility', 'visible')
         $('#quiz-info').css('visibility', 'visible')
@@ -108,15 +110,25 @@
         let code = $('#userroom').val()
         console.log('start quiz', code)
         socket.emit('start quiz', code)
+        $('#instructions').css("visibility", "hidden")
         $('#quiz').css('visibility', 'visible')
         $('#0').css('visibility', 'visible')
       })
 
       $('#togglequestion').on("click", function () {
-        let data = {index: $('#numIndex').val(), room: $('userroom').val()}
+        let room = $('#userroom').val()
+        let current = parseInt($('#numIndex').val(), 20)
+        let newIndex = current + 1
+        let newDiv = "#"+ newIndex
+        let data = {index: current, userroom: room }
+        console.log('togglequestion', data);
         socket.emit('next question', data)
-        $('#'+ data).css("display", "none")
-
+        $('#'+ current).css("display", "none")
+        if ($(newDiv).length){
+          $(newDiv).css("visibility", "visible")
+          } else {
+            $('#quiz-container').append("<div class='ui warning message'><h2>There are no more questions</h2><div>")
+          }
       })
 
       </script>
