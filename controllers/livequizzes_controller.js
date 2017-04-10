@@ -20,12 +20,12 @@ module.exports = {
       })
     })
   },
-  liveQuizScoreboard: function (req, res, next) {
-    Participant.find({}, function (err, participants) {
-      if (err) { return console.log(err) }
-      res.render('scoreboard', {participants, participants})
-    })
-  },
+  // liveQuizScoreboard: function (req, res, next) {
+  //   Participant.find({}, function (err, participants) {
+  //     if (err) { return console.log(err) }
+  //     res.render('scoreboard', {participants, participants})
+  //   })
+  // },
   joinLiveQuiz: function (req, res, next) {
     res.render('quizzes/join')
   },

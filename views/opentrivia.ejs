@@ -3,5 +3,9 @@
 
 <h1>This is open trivia</h1>
 
-<%= quizTrivia[1].stem %>
+<% quizTrivia.forEach(function (quiz) {
+  <%= quiz.stem %>
+  <% let options = quiz.options %>
+  <%= options
+}) %>
 </div>
