@@ -1,5 +1,4 @@
 <div class="ui container">
-  <%= livequiz %>
     <div class="ui form" id="quiz-header">
       <div class="inline fields" id="user-form">
         <h2 class="eight wide field">Key in your name to enter quiz: </h2>
@@ -51,7 +50,7 @@
 
       socket.on('change question', function (data) {
         console.log('change question fired', data);
-        let numIndex = data
+        let numIndex = parseInt(data, 20)
         let newIndex = numIndex + 1
         let newDiv = "#"+newIndex
         console.log('numIndex', numIndex, ' newIndex', newIndex);

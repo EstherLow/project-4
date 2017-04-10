@@ -1,5 +1,4 @@
 <div class="ui container" style="margin-top: 20px">
-  <%= quiz %>
   <div class="ui form" id="game-launch">
     <div class="inline fields">
       <h3 class="four wide field">To launch quiz, enter your name: </h3>
@@ -49,8 +48,7 @@
                 <div class="ui segment" value="<%= opt._id %>"><%= opt.content %></div>
                 <% }) %>
               </div>
-                <input type="hidden" id="numIndex" value="<%= index %>">
-                <button type="button" class="ui button" id="togglequestion">Next Question</button>
+              <button type="button" class="ui button toggle" id="<%= index %>">Next Question</button>
             </div>
             <% }) %>
           </div>
@@ -114,13 +112,13 @@
         $('#0').css('visibility', 'visible')
       })
 
-      $('#togglequestion').on("click", function () {
+      $('.toggle').on("click", function () {
         let room = $('#userroom').val()
-        let current = parseInt($('#numIndex').val(), 20)
-        let newIndex = current + 1
+        let current = $(this).attr('id')
+        let newIndex = parseInt(current, 20) + 1
         let newDiv = "#"+ newIndex
         let data = {index: current, userroom: room }
-        console.log('togglequestion', data);
+        console.log('togglequestion clicked', data);
         socket.emit('next question', data)
         $('#'+ current).css("display", "none")
         if ($(newDiv).length){

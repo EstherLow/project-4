@@ -1,5 +1,6 @@
 const express = require('express')
 const Question = require('../models/question').model
+const Quiz = require('../models/quiz').model
 
 module.exports = {
   new: function (req, res, next) {
@@ -26,12 +27,20 @@ module.exports = {
       options: optionsArr
       }, function (err, question) {
         if (err) { return console.log(err) }
-        if (req.body.destination === "Save and Exit") {
-          console.log(req.body);
-          res.redirect('/')
-      } else if (req.body.destination === "Save and Add Question") {
-        res.redirect('/quiz/' + req.body.quiz_id +'/questions/new')
-      }
+        let quizID = req.body.quiz_id
+        if (!req.body.quiz_id) { quizID = req.params.id}
+        Quiz.findById({_id: quizID}, function (err, quiz) {
+          console.log('quiz.questions', quiz.questions);
+          quiz.questions.push(question._id)
+          quiz.save()
+          if (err) { return console.log(err) }
+          if (req.body.destination === "Save and Exit") {
+            console.log(req.body);
+            res.redirect('/')
+          } else if (req.body.destination === "Save and Add Question") {
+            res.redirect('/quiz/' + req.body.quiz_id +'/question/new')
+          }
+        })
     })
   }
 }

@@ -1,6 +1,6 @@
 
-<div class="ui container">
-  <h1> Edit <%= quiz.name %> </h1>
+<div class="ui container" style="margin-top: 50px">
+  <h1> Editing: <%= quiz.name %> </h1>
   <form action="/quiz/<%= quiz._id %>" method="POST">
 
     <div class="ui form">
@@ -15,7 +15,8 @@
         </div>
       </div>
     </form>
-      <h2> Questions </h2>
+    <h2> Questions <span><a href="/quiz/<%=quiz._id%>/question/new">
+      <i class="orange plus link icon"></i></a></span></h2>
       <% questions.forEach(function(qn) { %>
         <form action="/questions/">
           <div class="ui piled brown segment">
@@ -59,6 +60,7 @@
       <% }) %>
     </div>
   </form>
+  <div><a href='/' class="ui red button">Cancel Update</a></div>
 </div>
 
 

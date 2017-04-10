@@ -9,15 +9,6 @@ const quizSchema = new mongoose.Schema({
   questions: [{type: mongoose.Schema.Types.ObjectId, ref:'Question'}]
 })
 
-quizSchema.pre('save', function (next) {
-  var quiz = this;
-  var objId = quiz._id
-  quiz.code = objId.toString().substring(20, 24)
-  console.log("quiz code is " + quiz.code);
-  next()
-
-})
-
 const Quiz = mongoose.model('Quiz', quizSchema)
 
 module.exports = {

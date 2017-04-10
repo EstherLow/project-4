@@ -11,7 +11,7 @@ module.exports = {
       instructions: req.body.instructions
     }, function(err, quiz) {
       if (err) { return console.log(err) }
-      res.redirect('/quiz/' + quiz._id + '/questions/new')
+      res.redirect('/quiz/' + quiz._id + '/question/new')
     })
   },
   listAllQuiz: function (req, res, next) {

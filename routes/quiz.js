@@ -12,7 +12,7 @@ router.get('/:id', quizzes_controller.editQuiz)  //show edit form for 1 quiz
 
 router.put('/:id', quizzes_controller.updateQuiz)
 
-router.get('/:id/questions/new', questions_controller.new)  // add new questions to created quiz
+router.get('/:id/question/new', questions_controller.new)  // add new questions to created quiz
 
 //router.get('/quiz/:id', quizzes_controller.showQuiz)
 
