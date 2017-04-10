@@ -33,7 +33,11 @@ module.exports = {
     Livequiz.findOne({code: req.body.code})
     .populate({
       path: 'quiz_id',
-      populate: { path: 'questions'}
+      model: 'Quiz',
+      populate: {
+        path: 'questions',
+        model: 'Question'
+      }
     })
     .exec(function (err, livequiz) {
       if (err) { return console.log(err)}
