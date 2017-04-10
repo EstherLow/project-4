@@ -1,7 +1,7 @@
 <div class="ui container">
   <div class="ui secondary pointing menu">
     <a class="item" href="/quiz/new">Create New Quiz</a>
-    <a class="item" href="#">View Question Bank</a>
+    <!-- <a class="item" href="#">View Question Bank</a> -->
   </div>
 
     <div class="row"><h1>Dashboard</h1></div>
@@ -24,13 +24,10 @@
               <div class="extra content">
                 <div class="ui three buttons">
                   <form action="/quiz/<%=quiz._id%>/live" method="GET">
-                    <button type="submit" class="ui basic green button" name="id" value="<%= quiz._id %>">Launch Quiz</button>
+                    <button type="submit" class="ui basic green button">Launch Quiz</button>
                   </form>
                   <form action="/quiz/<%=quiz._id%>" method="GET">
-                    <button class="ui basic red button" name="id" value="<%= quiz._id %>">Edit Quiz</button>
-                  </form>
-                  <!-- <form action="/quizzes/<%=quiz._id%>/game" method="GET">
-                    <button type="submit" class="ui basic blue button" name="id" value="<%= quiz._id %>">Launch Quiz</button> -->
+                    <button class="ui basic red button">Edit Quiz</button>
                   </form>
                 </div>
               </div>
@@ -38,4 +35,11 @@
         <% }) %>
       </div>
     </div>
+    <!-- <div class="row" style="margin-top: 20px">
+      <div class="">
+        <h2>Load General Knowledge Quiz Obtained from Open Trivia DB API</h2><span>
+          <a class="ui green button" href="/opentrivia">Get Quiz</a>
+        </span>
+      </div>
+    </div> -->
 </div>

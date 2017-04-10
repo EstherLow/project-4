@@ -12,8 +12,7 @@
       </div>
     </div>
   </div>
-
-  <div id="instructions" class="ui center aligned container" style="visibility: hidden">
+  <div id="instructions" class="ui center aligned container" style="visibility: hidden; margin-top: 20px">
     <h2 class="ui header">To enter quiz, please go to http://classroom-quiz-helper.herokuapp.com/livequiz, and enter the code below</h2>
     <div class="ui grid">
       <div class="eight wide column">
@@ -127,7 +126,7 @@
         if ($(newDiv).length){
           $(newDiv).css("visibility", "visible")
           } else {
-            $('#quiz-container').append("<div class='ui warning message'><h2>There are no more questions</h2><div>")
+            $('#quiz-container').append("<div class='ui warning message'><h2>There are no more questions</h2></div><div><a class='ui green button' href='/'>Back to dashboard</a></div>")
           }
       })
 

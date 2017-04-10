@@ -66,6 +66,7 @@ app.get('/quizzes/:id/launch.html', function(req, res) {
   res.render('game')
 })
 
+app.get('/opentrivia', quizzes_controller.getOpenTrivia)
 
 
 

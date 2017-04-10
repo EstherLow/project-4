@@ -18,6 +18,8 @@ router.get('/:id/questions/new', questions_controller.new)  // add new questions
 
 router.get('/:id/live', livequizzes_controller.showLiveQuiz)  // show view of individual live quiz
 
+//router.get('/opentrivia', quizzes_controller.getOpenTrivia)
+
 
 
 

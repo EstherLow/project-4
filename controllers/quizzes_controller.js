@@ -1,4 +1,5 @@
 const express = require('express')
+const request = require('request')
 const Quiz = require('../models/quiz').model
 const Question = require('../models/question').model
 const Participant = require('../models/participant').model
@@ -58,6 +59,33 @@ module.exports = {
     Quiz.findById({_id: req.params.id}, function (err, quiz) {
       if (err) {return console.log(err)}
       res.render('quiz', {quiz: quiz})
+    })
+  },
+  getOpenTrivia: function (req, res, next) {
+    request("https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple", function (error, response) {
+      if (error) { return console.log(error)}
+      let data = JSON.parse(response.body)
+      let results = data.results
+      let quizTrivia = []
+      results.forEach(function (result) {
+        let qnHolder = {}
+        qnHolder.stem = result.question
+        qnHolder.options = []
+        result.correct_answer = {'content': result.correct_answer, 'isAnswer': true}
+        let optionsHolder = qnHolder.options
+        let incorrectAnswers = result.incorrect_answers
+        incorrectAnswers.forEach(function (answer) {
+          let temp = {}
+          temp.content = answer
+          temp.istrue = false
+          optionsHolder.push(temp)
+        })
+        optionsHolder.push(result.correct_answer)
+        quizTrivia.push(qnHolder)
+        console.log('questionholder', qnHolder);
+      })
+        res.render('opentrivia', {quizTrivia: quizTrivia})
+
     })
   }
 }

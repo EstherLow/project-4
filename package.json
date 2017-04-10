@@ -27,6 +27,7 @@
     "method-override": "^2.3.7",
     "mongoose": "^4.8.6",
     "path": "^0.12.7",
+    "request": "^2.81.0",
     "semantic-ui": "^2.2.10",
     "socket.io": "^1.7.3",
     "vue": "^2.2.1"
