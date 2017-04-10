@@ -12,10 +12,11 @@ module.exports = {
       Quiz.findById({_id: req.params.id})
       .populate({
         path: 'questions',
-        populate: {path: 'options'}
+        model: 'Question'
       })
       .exec(function (err, quiz){
         if (err) { return console.log(err)}
+        console.log("livequiz", livequiz);
         res.render('response3', {livequiz: livequiz, quiz: quiz})
       })
     })
@@ -41,6 +42,7 @@ module.exports = {
     })
     .exec(function (err, livequiz) {
       if (err) { return console.log(err)}
+      console.log("livequiz", livequiz);
       res.render('response2', {livequiz: livequiz})
     })
   }
