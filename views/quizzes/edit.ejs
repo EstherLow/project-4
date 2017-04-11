@@ -18,7 +18,7 @@
     <h2> Questions <span><a href="/quiz/<%=quiz._id%>/question/new">
       <i class="orange plus link icon"></i></a></span></h2>
       <% questions.forEach(function(qn) { %>
-        <form action="/questions/">
+        <form action="/question/<%= qn._id %>">
           <div class="ui piled brown segment">
             <input type="hidden" name="qn_id" value=<%= qn._id%> >
               <div class="inline fields">
